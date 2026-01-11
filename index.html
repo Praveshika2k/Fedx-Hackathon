@@ -1,0 +1,762 @@
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+
+        .btn-secondary {
+            background: #ecf0f1;
+            color: #333;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-top: 4px solid #667eea;
+        }
+
+        .stat-card.critical { border-top-color: #e74c3c; }
+        .stat-card.high { border-top-color: #f39c12; }
+        .stat-card.medium { border-top-color: #3498db; }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #999;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #555;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .table td {
+            padding: 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-critical { background: #ffebee; color: #c62828; }
+        .badge-high { background: #fff3e0; color: #e65100; }
+        .badge-medium { background: #e3f2fd; color: #1565c0; }
+        .badge-low { background: #e8f5e9; color: #2e7d32; }
+        .badge-allocated { background: #74b9ff; color: white; }
+        .badge-in-progress { background: #55efc4; color: #2d3436; }
+        .badge-escalated { background: #fd79a8; color: white; }
+        .badge-resolved { background: #00b894; color: white; }
+        .badge-breached { background: #ff7675; color: white; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+        }
+
+        .form-section label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .form-section input,
+        .form-section textarea,
+        .form-section select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #ecf0f1;
+        }
+
+        .modal-actions button {
+            flex: 1;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .hidden { display: none !important; }
+
+        @media (max-width: 1024px) {
+            .grid { grid-template-columns: repeat(2, 1fr); }
+            .main-content { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- LOGIN PAGE -->
+    <div class="login-page" id="loginPage">
+        <div class="login-box">
+            <h1>📦 FedEx DCA</h1>
+            <p>Intelligent Case Management Platform</p>
+            
+            <div class="demo-creds">
+                <strong>Demo Credentials:</strong><br>
+                👨‍💼 Admin: admin@fedex.com / admin123<br>
+                📦 FedEx: fedex@company.com / fedex123<br>
+                👤 DCA Agent: dca1@company.com / dca123
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" placeholder="admin@fedex.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-login">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="app" class="hidden">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>📦 DCA Platform</h2>
+                <p id="userRole">Loading...</p>
+            </div>
+            <div class="sidebar-menu">
+                <a onclick="switchPage('dashboard')" class="sidebar-link active">
+                    <span>📊</span> Dashboard
+                </a>
+                <a onclick="switchPage('cases')" class="sidebar-link">
+                    <span>📋</span> Cases
+                </a>
+                <a onclick="switchPage('dcas')" class="sidebar-link">
+                    <span>👥</span> DCA Agents
+                </a>
+                <a onclick="switchPage('sla')" class="sidebar-link">
+                    <span>⏱️</span> SLA Monitor
+                </a>
+                <a onclick="switchPage('audit')" class="sidebar-link">
+                    <span>🔍</span> Audit Trail
+                </a>
+                <a onclick="switchPage('sop')" class="sidebar-link">
+                    <span>📑</span> SOPs
+                </a>
+                <a onclick="logout()" class="sidebar-link" style="margin-top: 40px; border-top: 1px solid #444; padding-top: 20px;">
+                    <span>🚪</span> Logout
+                </a>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- DASHBOARD -->
+            <div id="dashboard" class="dashboard active">
+                <div class="header">
+                    <div>
+                        <h1>📊 Dashboard</h1>
+                        <p style="color: #999; margin-top: 5px;">Welcome back, <span id="userName">User</span></p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-primary" onclick="openModal('newCaseModal')" id="newCaseBtn">+ New Case</button>
+                    </div>
+                </div>
+
+                <div id="alertContainer"></div>
+
+                <div class="grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalCases">0</div>
+                        <div class="stat-label">Total Cases</div>
+                    </div>
+                    <div class="stat-card critical">
+                        <div class="stat-number" id="criticalCases">0</div>
+                        <div class="stat-label">Critical Cases</div>
+                    </div>
+                    <div class="stat-card high">
+                        <div class="stat-number" id="slaBreaches">0</div>
+                        <div class="stat-label">SLA Breaches</div>
+                    </div>
+                    <div class="stat-card medium">
+                        <div class="stat-number" id="resolvedCases">0</div>
+                        <div class="stat-label">Resolved</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>📋 Recent Cases</h2>
+                    <table class="table" id="recentCasesTable">
+                        <thead>
+                            <tr>
+                                <th>Case ID</th>
+                                <th>Debtor</th>
+                                <th>Amount</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>DCA</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CASES PAGE -->
+            <div id="cases" class="dashboard">
+                <div class="header">
+                    <h1>📋 All Cases</h1>
+                </div>
+
+                <div class="card">
+                    <table class="table" id="casesTable">
+                        <thead>
+                            <tr>
+                                <th>Case ID</th>
+                                <th>Debtor</th>
+                                <th>Amount</th>
+                                <th>Age</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>DCA</th>
+                                <th>Score</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- DCA AGENTS PAGE -->
+            <div id="dcas" class="dashboard">
+                <div class="header">
+                    <h1>👥 DCA Agents Performance</h1>
+                </div>
+
+                <div class="card">
+                    <table class="table" id="dcasTable">
+                        <thead>
+                            <tr>
+                                <th>Agent ID</th>
+                                <th>Name</th>
+                                <th>Capacity</th>
+                                <th>Recovery Rate</th>
+                                <th>Compliance</th>
+                                <th>SLA Breaches</th>
+                                <th>Recovered ($)</th>
+                                <th>Avg Days</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SLA MONITOR PAGE -->
+            <div id="sla" class="dashboard">
+                <div class="header">
+                    <h1>⏱️ SLA Monitor - Risk-Based Deadlines</h1>
+                </div>
+
+                <div class="card">
+                    <h2>SLA Status by Priority Level</h2>
+                    <table class="table" id="slaTable">
+                        <thead>
+                            <tr>
+                                <th>Case ID</th>
+                                <th>Debtor</th>
+                                <th>Priority</th>
+                                <th>DCA</th>
+                                <th>First Action Due</th>
+                                <th>Resolution Due</th>
+                                <th>Status</th>
+                                <th>Hours Left</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- AUDIT TRAIL PAGE -->
+            <div id="audit" class="dashboard">
+                <div class="header">
+                    <h1>🔍 Audit Trail & Compliance Log</h1>
+                </div>
+
+                <div class="card">
+                    <div id="auditLog" style="max-height: 600px; overflow-y: auto; font-size: 13px;">
+                        <p style="color: #999;">Activity logs will appear here</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SOP PAGE -->
+            <div id="sop" class="dashboard">
+                <div class="header">
+                    <h1>📑 Standard Operating Procedures (SOPs)</h1>
+                </div>
+
+                <div id="sopContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW CASE MODAL -->
+    <div id="newCaseModal" class="modal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 20px;">📝 Submit New Case</h2>
+            <form id="newCaseForm">
+                <div class="form-section">
+                    <label>Tracking Number *</label>
+                    <input type="text" id="trackingNumber" placeholder="1Z999AA10123456784" required>
+                </div>
+                <div class="form-section">
+                    <label>Debtor Name *</label>
+                    <input type="text" id="debtorName" required>
+                </div>
+                <div class="form-section">
+                    <label>Debt Amount ($) *</label>
+                    <input type="number" id="debtAmount" required>
+                </div>
+                <div class="form-section">
+                    <label>Debt Age (days) *</label>
+                    <input type="number" id="debtAge" required>
+                </div>
+                <div class="form-section">
+                    <label>Phone</label>
+                    <input type="tel" id="debtorPhone">
+                </div>
+                <div class="form-section">
+                    <label>Email</label>
+                    <input type="email" id="debtorEmail">
+                </div>
+                <div class="form-section">
+                    <label>Geographic Region</label>
+                    <select id="geoRegion" required>
+                        <option value="">--Select--</option>
+                        <option>North-East</option>
+                        <option>South-West</option>
+                        <option>Central</option>
+                        <option>West-Coast</option>
+                    </select>
+                </div>
+                <div class="form-section">
+                    <label>Notes</label>
+                    <textarea id="caseNotes"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Submit Case</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('newCaseModal')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- CASE DETAIL MODAL -->
+    <div id="caseDetailModal" class="modal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 20px;">Case Details</h2>
+            <div id="caseDetailContent"></div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('caseDetailModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3001';
+        let currentUser = null;
+        let currentSessionId = null;
+        let allCases = [];
+        let allDCAs = [];
+
+        // LOGIN
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (!response.ok) throw new Error('Invalid credentials');
+
+                const data = await response.json();
+                currentUser = data.user;
+                currentSessionId = data.sessionId;
+
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('app').classList.remove('hidden');
+                document.getElementById('userName').textContent = currentUser.name;
+                document.getElementById('userRole').textContent = currentUser.role;
+                document.getElementById('newCaseBtn').style.display = 
+                    currentUser.role === 'FEDEX' ? 'inline-block' : 'none';
+
+                document.getElementById('newCaseForm').addEventListener('submit', submitNewCase);
+                loadDashboard();
+            } catch (error) {
+                alert('Login failed: ' + error.message);
+            }
+        });
+
+        async function submitNewCase(e) {
+            e.preventDefault();
+
+            const caseData = {
+                trackingNumber: document.getElementById('trackingNumber').value,
+                debtor: document.getElementById('debtorName').value,
+                debtAmount: parseFloat(document.getElementById('debtAmount').value),
+                debtAge: parseInt(document.getElementById('debtAge').value),
+                phone: document.getElementById('debtorPhone').value,
+                email: document.getElementById('debtorEmail').value,
+                notes: document.getElementById('caseNotes').value,
+                geoRegion: document.getElementById('geoRegion').value
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/api/cases/ingest`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Session-Id': currentSessionId
+                    },
+                    body: JSON.stringify(caseData)
+                });
+
+                if (!response.ok) throw new Error('Failed to submit');
+                const result = await response.json();
+
+                showAlert('success', `✅ Case ${result.caseId} created! Auto-allocated with intelligent scoring.`);
+                closeModal('newCaseModal');
+                document.getElementById('newCaseForm').reset();
+                loadDashboard();
+            } catch (error) {
+                showAlert('error', `Error: ${error.message}`);
+            }
+        }
+
+        async function loadDashboard() {
+            try {
+                const casesRes = await fetch(`${API_URL}/api/cases`, {
+                    headers: { 'X-Session-Id': currentSessionId }
+                });
+                const casesData = await casesRes.json();
+                allCases = casesData.cases || [];
+
+                const dcasRes = await fetch(`${API_URL}/api/dcas`, {
+                    headers: { 'X-Session-Id': currentSessionId }
+                });
+                allDCAs = await dcasRes.json();
+
+                updateStats(casesData.stats);
+                renderRecentCases();
+                renderCasesTable();
+                renderDCAsTable();
+                loadSLAStatus();
+                loadSOPs();
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+
+        function updateStats(stats) {
+            if (!stats) return;
+            document.getElementById('totalCases').textContent = stats.total || 0;
+            document.getElementById('criticalCases').textContent = stats.critical || 0;
+            document.getElementById('slaBreaches').textContent = stats.breached || 0;
+            document.getElementById('resolvedCases').textContent = stats.resolved || 0;
+        }
+
+        function renderRecentCases() {
+            const tbody = document.querySelector('#recentCasesTable tbody');
+            tbody.innerHTML = allCases.slice(0, 5).map(c => `
+                <tr>
+                    <td><strong>${c.caseId}</strong></td>
+                    <td>${c.debtor}</td>
+                    <td>$${c.debtAmount.toLocaleString()}</td>
+                    <td><span class="badge badge-${c.priority.toLowerCase()}">${c.priority}</span></td>
+                    <td><span class="badge badge-${c.status.toLowerCase().replace('_', '-')}">${c.status}</span></td>
+                    <td>${c.allocatedDCA || '-'}</td>
+                    <td><button class="btn btn-primary" onclick="viewCase('${c.caseId}')" style="padding:5px 10px;font-size:12px;">View</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function renderCasesTable() {
+            const tbody = document.querySelector('#casesTable tbody');
+            tbody.innerHTML = allCases.map(c => `
+                <tr>
+                    <td><strong>${c.caseId}</strong></td>
+                    <td>${c.debtor}</td>
+                    <td>$${c.debtAmount.toLocaleString()}</td>
+                    <td>${c.debtAge}d</td>
+                    <td><span class="badge badge-${c.priority.toLowerCase()}">${c.priority}</span></td>
+                    <td><span class="badge badge-${c.status.toLowerCase().replace('_', '-')}">${c.status}</span></td>
+                    <td>${c.allocatedDCA || '-'}</td>
+                    <td>${c.allocationScore ? parseFloat(c.allocationScore).toFixed(2) : '-'}</td>
+                    <td><button class="btn btn-primary" onclick="viewCase('${c.caseId}')" style="padding:5px 10px;font-size:12px;">View</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function renderDCAsTable() {
+            const tbody = document.querySelector('#dcasTable tbody');
+            tbody.innerHTML = allDCAs.map(dca => `
+                <tr>
+                    <td><strong>${dca.dcaId}</strong></td>
+                    <td>${dca.name}</td>
+                    <td>${dca.currentLoad}/${dca.capacity}</td>
+                    <td>${dca.historicalRecoveryRate}</td>
+                    <td>${dca.complianceScore}</td>
+                    <td><span class="badge badge-${dca.slaBreaches > 0 ? 'breached' : 'low'}">${dca.slaBreaches}</span></td>
+                    <td>$${dca.recoveredAmount.toLocaleString()}</td>
+                    <td>${dca.averageResolutionDays}d</td>
+                </tr>
+            `).join('');
+        }
+
+        async function loadSLAStatus() {
+            try {
+                const response = await fetch(`${API_URL}/api/sla/status`, {
+                    headers: { 'X-Session-Id': currentSessionId }
+                });
+                const slaData = await response.json();
+
+                const tbody = document.querySelector('#slaTable tbody');
+                tbody.innerHTML = slaData.map(item => `
+                    <tr>
+                        <td><strong>${item.caseId}</strong></td>
+                        <td>${item.debtor}</td>
+                        <td><span class="badge badge-${item.priority.toLowerCase()}">${item.priority}</span></td>
+                        <td>${item.allocatedDCA || '-'}</td>
+                        <td>${new Date(item.slaDeadlines.firstAction).toLocaleDateString()}</td>
+                        <td>${new Date(item.slaDeadlines.resolution).toLocaleDateString()}</td>
+                        <td>${item.breached ? '<span class="badge badge-breached">BREACHED</span>' : '<span class="badge badge-low">OK</span>'}</td>
+                        <td>${item.hoursRemaining}h</td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading SLA:', error);
+            }
+        }
+
+        async function loadSOPs() {
+            try {
+                const response = await fetch(`${API_URL}/api/sops`, {
+                    headers: { 'X-Session-Id': currentSessionId }
+                });
+                const sopData = await response.json();
+
+                const container = document.getElementById('sopContainer');
+                container.innerHTML = Object.entries(sopData).map(([category, rules]) => `
+                    <div class="card">
+                        <h2>📋 ${category.replace(/_/g, ' ')}</h2>
+                        <ol style="margin-left: 20px; line-height: 1.8; color: #555;">
+                            ${rules.map(rule => `<li style="margin-bottom: 10px;">${rule}</li>`).join('')}
+                        </ol>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading SOPs:', error);
+            }
+        }
+
+        function viewCase(caseId) {
+            const caseData = allCases.find(c => c.caseId === caseId);
+            if (!caseData) return;
+
+            const html = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div>
+                        <h3 style="color: #667eea; margin-bottom: 10px;">📋 Basic Info</h3>
+                        <p><strong>Tracking:</strong> ${caseData.trackingNumber}</p>
+                        <p><strong>Debtor:</strong> ${caseData.debtor}</p>
+                        <p><strong>Amount:</strong> <strong style="color: #667eea;">$${caseData.debtAmount.toLocaleString()}</strong></p>
+                        <p><strong>Age:</strong> ${caseData.debtAge} days</p>
+                        <p><strong>Recovery Prob:</strong> ${(caseData.recoveryProbability * 100).toFixed(1)}%</p>
+                    </div>
+                    <div>
+                        <h3 style="color: #667eea; margin-bottom: 10px;">🎯 Allocation</h3>
+                        <p><strong>Status:</strong> <span class="badge badge-${caseData.status.toLowerCase().replace('_', '-')}">${caseData.status}</span></p>
+                        <p><strong>Priority:</strong> <span class="badge badge-${caseData.priority.toLowerCase()}">${caseData.priority}</span></p>
+                        <p><strong>Assigned DCA:</strong> ${caseData.allocatedDCA || 'Pending'}</p>
+                        <p><strong>Allocation Score:</strong> <strong>${caseData.allocationScore || '-'}</strong></p>
+                    </div>
+                </div>
+
+                ${caseData.slaDeadlines ? `
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+                    <h3 style="color: #667eea; margin-bottom: 10px;">⏱️ SLA Deadlines</h3>
+                    <p><strong>First Action:</strong> ${new Date(caseData.slaDeadlines.firstAction).toLocaleString()}</p>
+                    <p><strong>Follow-up:</strong> ${new Date(caseData.slaDeadlines.followUp).toLocaleString()}</p>
+                    <p><strong>Resolution:</strong> ${new Date(caseData.slaDeadlines.resolution).toLocaleString()}</p>
+                    <p><strong>Status:</strong> ${caseData.slaBreached ? '<span class="badge badge-breached">BREACHED</span>' : '<span class="badge badge-low">ON TRACK</span>'}</p>
+                </div>
+                ` : ''}
+
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                    <h3 style="color: #667eea; margin-bottom: 10px;">📝 Audit Trail (${caseData.auditTrail.length})</h3>
+                    <div style="max-height: 200px; overflow-y: auto; font-size: 12px;">
+                        ${caseData.auditTrail.map(entry => `
+                            <div style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #ddd;">
+                                <strong style="color: #667eea;">${entry.action}</strong> by ${entry.user}<br>
+                                <span style="color: #999;">${new Date(entry.timestamp).toLocaleString()}</span><br>
+                                ${entry.details}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('caseDetailContent').innerHTML = html;
+            openModal('caseDetailModal');
+        }
+
+        function switchPage(page) {
+            document.querySelectorAll('.dashboard').forEach(el => el.classList.remove('active'));
+            document.getElementById(page).classList.add('active');
+            document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+            event.target.closest('.sidebar-link').classList.add('active');
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        function showAlert(type, msg) {
+            const div = document.createElement('div');
+            div.className = `alert alert-${type}`;
+            div.textContent = msg;
+            document.getElementById('alertContainer').appendChild(div);
+            setTimeout(() => div.remove(), 4000);
+        }
+
+        function logout() {
+            currentUser = null;
+            currentSessionId = null;
+            document.getElementById('loginPage').classList.remove('hidden');
+            document.getElementById('app').classList.add('hidden');
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+        }
+
+        // Auto-refresh every 5 seconds
+        setInterval(() => {
+            if (currentSessionId) loadDashboard();
+        }, 5000);
+    </script>
+</body>
+</html>

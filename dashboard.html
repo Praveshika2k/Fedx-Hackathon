@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FedEx DCA Platform - Case Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            <!DOCTYPE html>
+            <html><body><p>Dashboard removed — API-only mode. Use the API endpoints and check server console for allocation/accuracy output.</p></body></html>
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .dca-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .load-percentage {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .alert {
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading {
+            text-align: center;
+            color: #999;
+            padding: 20px;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .refresh-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .refresh-btn:hover {
+            background: #5568d3;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dca-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>📦 FedEx DCA Platform</h1>
+                <p style="color: #999; margin-top: 5px;">Intelligent Case Management & Allocation</p>
+            </div>
+            <div class="header-badge">Live • Connected</div>
+        </header>
+
+        <!-- Stats Dashboard -->
+        <div class="stats">
+            <div class="stat-box">
+                <div class="number" id="totalCases">0</div>
+                <div class="label">Total Cases</div>
+            </div>
+            <div class="stat-box">
+                <div class="number" id="allocatedCases">0</div>
+                <div class="label">Allocated</div>
+            </div>
+            <div class="stat-box">
+                <div class="number" id="totalCapacity">20</div>
+                <div class="label">DCA Capacity</div>
+            </div>
+            <div class="stat-box">
+                <div class="number" id="utilizationRate">0%</div>
+                <div class="label">Utilization</div>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <!-- Case Intake Form -->
+            <div class="card">
+                <h2><span>📝</span> New Case from FedEx</h2>
+                <div id="formAlert"></div>
+                <form id="caseForm">
+                    <div class="form-group">
+                        <label for="trackingNumber">Tracking Number *</label>
+                        <input type="text" id="trackingNumber" placeholder="1Z999AA10123456784" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="debtor">Debtor Name *</label>
+                            <input type="text" id="debtor" placeholder="Company Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="debtAmount">Debt Amount ($) *</label>
+                            <input type="number" id="debtAmount" placeholder="50000" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="debtAge">Debt Age (days) *</label>
+                            <input type="number" id="debtAge" placeholder="30" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" placeholder="555-0101">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="contact@company.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes">Notes</label>
+                        <textarea id="notes" placeholder="Additional case information..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">📤 Submit Case</button>
+                </form>
+            </div>
+
+            <!-- Recent Cases -->
+            <div class="card">
+                <h2><span>📋</span> Recent Cases <button class="refresh-btn" onclick="refreshCases()">⟳ Refresh</button></h2>
+                <div id="casesList" class="cases-list">
+                    <div class="loading"><div class="spinner"></div> Loading cases...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DCA Status -->
+        <div class="card">
+            <h2><span>👥</span> DCA Workload Status</h2>
+            <div id="dcaStatus" class="dca-list">
+                <div class="loading"><div class="spinner"></div> Loading DCA status...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3001';
+
+        // Form submission
+        document.getElementById('caseForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const caseData = {
+                trackingNumber: document.getElementById('trackingNumber').value,
+                debtor: document.getElementById('debtor').value,
+                debtAmount: parseFloat(document.getElementById('debtAmount').value),
+                debtAge: parseInt(document.getElementById('debtAge').value),
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                notes: document.getElementById('notes').value
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/api/cases/ingest`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(caseData)
+                });
+
+                if (!response.ok) throw new Error('Failed to submit case');
+
+                const result = await response.json();
+                showAlert('success', `✅ Case ${result.caseId} received and queued for allocation!`);
+                document.getElementById('caseForm').reset();
+
+                // Refresh UI
+                setTimeout(() => {
+                    refreshCases();
+                    refreshDCA();
+                }, 500);
+
+            } catch (error) {
+                showAlert('error', `❌ Error: ${error.message}`);
+            }
+        });
+
+        function showAlert(type, message) {
+            const alertDiv = document.getElementById('formAlert');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            setTimeout(() => alertDiv.textContent = '', 4000);
+        }
+
+        async function refreshCases() {
+            try {
+                const response = await fetch(`${API_URL}/api/cases`);
+                const data = await response.json();
+
+                const casesList = document.getElementById('casesList');
+                const cases = data.cases || [];
+
+                if (cases.length === 0) {
+                    casesList.innerHTML = '<p style="color: #999; text-align: center; padding: 20px;">No cases yet</p>';
+                    return;
+                }
+
+                casesList.innerHTML = cases.slice(0, 10).map(c => `
+                    <div class="case-item">
+                        <div class="case-header">
+                            <span class="case-id">${c.caseId}</span>
+                            <div>
+                                <span class="status-badge status-${c.status.toLowerCase()}">${c.status}</span>
+                                ${c.priority ? `<span class="priority-badge priority-${c.priority.toLowerCase()}">${c.priority}</span>` : ''}
+                            </div>
+                        </div>
+                        <div class="case-info">
+                            <div class="info-row">
+                                <strong>Debtor:</strong> <span>${c.debtor}</span>
+                            </div>
+                            <div class="info-row">
+                                <strong>Amount:</strong> <span>$${c.debtAmount.toLocaleString()}</span>
+                            </div>
+                            <div class="info-row">
+                                <strong>Age:</strong> <span>${c.debtAge} days</span>
+                            </div>
+                            <div class="info-row">
+                                <strong>Allocated to:</strong> <span>${c.allocatedDCA || 'Pending'}</span>
+                            </div>
+                            ${c.recoveryProbability ? `
+                            <div class="info-row">
+                                <strong>Recovery:</strong> <span>${(c.recoveryProbability * 100).toFixed(1)}%</span>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `).join('');
+
+                // Update stats
+                document.getElementById('totalCases').textContent = data.stats.total;
+                document.getElementById('allocatedCases').textContent = data.stats.allocated;
+
+            } catch (error) {
+                console.error('Error refreshing cases:', error);
+            }
+        }
+
+        async function refreshDCA() {
+            try {
+                const response = await fetch(`${API_URL}/api/dcas/status`);
+                const data = await response.json();
+
+                const dcaStatus = document.getElementById('dcaStatus');
+                dcaStatus.innerHTML = data.dcas.map(dca => {
+                    const utilization = (dca.currentLoad / dca.capacity) * 100;
+                    return `
+                        <div class="dca-card">
+                            <div class="dca-name">${dca.dcaId}</div>
+                            <div class="dca-info">
+                                <span>Workload: ${dca.currentLoad}/${dca.capacity}</span>
+                                <span class="load-percentage">${dca.utilization}</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${utilization}%"></div>
+                            </div>
+                            <div class="dca-info" style="font-size: 12px;">
+                                <span>Available Slots: ${dca.availableSlots}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                // Update utilization rate
+                const totalCap = data.totalCapacity;
+                const totalUtil = data.totalUtilization;
+                document.getElementById('utilizationRate').textContent = 
+                    ((totalUtil / totalCap) * 100).toFixed(0) + '%';
+
+            } catch (error) {
+                console.error('Error refreshing DCA status:', error);
+            }
+        }
+
+        // Auto-refresh every 3 seconds
+        setInterval(() => {
+            refreshCases();
+            refreshDCA();
+        }, 3000);
+
+        // Initial load
+        refreshCases();
+        refreshDCA();
+    </script>
+</body>
+</html>
